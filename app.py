@@ -5,7 +5,7 @@ from discord.utils import get
 
 yo_bro_commands=['$help','$giverole','$hi','$game']
 
-token='OTg1OTAwMzU4NDEwODI5ODc0.GUjG_A.dhOgqCd9JNKRiA7QwN9c7A80oKerJrBlnW-W74'
+token=''
 #bot=discord.Client()
 prefix='$'
 
