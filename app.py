@@ -1,10 +1,13 @@
+from email import message_from_string
 import discord
 from discord.ext import commands
 from discord.utils import get
+from datetime import datetime
 
+yo_bro_commands=['$help','$giverole','$hi','$game','$add','$show']
 
-yo_bro_commands=['$help','$giverole','$hi','$game']
-
+stalked = []
+authoriazed_authors=['Mahdi-Vagos-17.5-arbi#5815']
 token=''
 #bot=discord.Client()
 prefix='$'
@@ -32,8 +35,22 @@ async def on_message(message):
         if message.content=='$game':
             await message.channel.send(message.author.id)
 
+        if message.content[1]=='add':
+            if message.author in authoriazed_authors:
+                stalked.append(message.content[1])
+            else:
+                await message.channel.send('ASPA')
+
+        if message.content=='$show':
+            print(message.author)
+            if message.author in authoriazed_authors:
+                await message.channel.send(stalked)
+            else:
+                await message.channel.send('ASPA')
+
         if message.content not in yo_bro_commands:
-            if message.author.id!=985900358410829874:
+            msg=message.content[0]+message.content[1]+message.content[2]+message.content[3]
+            if message.author.id!=985900358410829874 and msg!='$add':
                 print(f"{message.author} tried to use the {message.content} in the {message.channel} channel")
                 await message.channel.send("```incorrect command\nUse the '$help' command```")
 
@@ -42,7 +59,10 @@ async def on_message(message):
 @bot.event
 async def on_member_update(before, after):
     if str(before.status)!=str(after.status):
-        print(f'{after.name} has changed hes status:{before.status.name}=>{after.status.name}')
+        print(f"{after.name} has changed he's status:{before.status.name}=>{after.status.name}")
+        if before.name in stalked:
+            f=open('stalking_results.txt','a+')
+            f.write(f"{before.name} has changed he's status:{before.status.name}=>{after.status.name} at {datetime.utcnow}")
 
 
 @bot.event
